@@ -1,0 +1,53 @@
+.one-button-hover(@color: @default-color, @lighten: 8%, @font-color: #fff) {
+  color: @font-color;
+  background-color: @color;
+  border: 1px solid @color;
+
+  &:not(.one-button-disabled):not(.one-button-default):not(.one-button-dashed):not(.one-button-hollow) {
+    &:hover,
+    &:focus {
+      border-color: @color;
+      background-color: lighten(@color, @lighten);
+      color: lighten(@font-color, @lighten);
+    }
+
+    &:active {
+      background-color: @color;
+    }
+  }
+  &.one-button-dashed:not(.one-button-hollow) {
+    &:hover,
+    &:focus {
+      background-color: lighten(@color, @lighten);
+      color: lighten(@font-color, @lighten);
+    }
+    &:active {
+      background-color: @color;
+    }
+  }
+}
+
+.one-button-hollow(@color, @lighten: 8%) {
+  border-color: @color;
+  color: @color;
+  &:not(.one-button-disabled) {
+    &:hover {
+      // fade("颜色值",透明度百分比)，百分比越小，透明度越强 如fade(red,20%)
+      background: fade(@color, 5%);
+    }
+    &:active {
+      border-color: fade(@color, 35%);
+    }
+  }
+}
+
+.one-button-dashed (@color: #e8e8e8) {
+  border-style: dashed ;
+  border-color: @color;
+  &:hover {
+    border-style: dashed ;
+  }
+  &:active {
+    border-style: dashed ;
+  }
+}
