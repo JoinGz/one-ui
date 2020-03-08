@@ -1,0 +1,177 @@
+@import '../styles/vars.less';
+@import '../styles/mixins.less';
+@import '../styles/animate.less';
+@name: one-tooltip;
+.xafter {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    z-index: -1;
+}
+.@{name} {
+  position: relative;
+  margin: 30px;
+  display: inline-block;
+}
+.@{name}-position {
+  position: absolute;
+  padding: 5px 10px;
+  border-radius: @border-radius;
+}
+.@{name}-position-dark {
+  background: @tooltip-dark-bg-color;
+  color: @white;
+}
+.@{name}-trigger {
+  display: inline-block;
+}
+.@{name}-position-top {
+  &::after{
+    .xafter;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 85%;
+    border-top-color: #444;
+    border-bottom: none;
+  }
+  animation-name: tooltiptopBack;
+  animation-duration: @tooltip-animate-time;
+  animation-fill-mode: forwards;
+  animation-timing-function: @animate-type;
+  &.@{name}-position-show {
+    animation-name: tooltiptop;
+  }
+}
+.@{name}-position-bottom {
+  animation-name: tooltipBottomBack;
+  animation-duration: @tooltip-animate-time;
+  animation-fill-mode: forwards;
+  animation-timing-function: @animate-type;
+  &.@{name}-position-show {
+    animation-name: tooltipBottom ;
+  }
+  &::after{
+    .xafter;
+    bottom: 85%;
+    border-bottom-color: #444;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.@{name}-position-left {
+  animation-name: tooltipLeftBack;
+  animation-duration: @tooltip-animate-time;
+  animation-fill-mode: forwards;
+  animation-timing-function: @animate-type;
+  &.@{name}-position-show {
+    animation-name: tooltipLeft;
+  }
+  &::after{
+    .xafter;
+    transform: translateY(-50%);
+    top: 50%;
+    border-right: none;
+    border-left-color: #444;
+    left: 95%;
+  }
+}
+.@{name}-position-right {
+  animation-name: tooltipRightBack;
+  animation-duration: @tooltip-animate-time;
+  animation-fill-mode: forwards;
+  animation-timing-function: @animate-type;
+  &.@{name}-position-show {
+    animation-name: tooltipRight;
+  }
+  &::after{
+    .xafter;
+    transform: translateY(-50%);
+    top: 50%;
+    border-right-color: #444;
+    border-left: none;
+    right: 95%;
+  }
+}
+@keyframes tooltiptop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0,-10px,0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+}
+@keyframes tooltiptopBack {
+  0% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0,-10px,0);
+  }
+}
+
+@keyframes tooltipBottom {
+  0% {
+    opacity: 0;
+    transform: translate3d(0,10px,0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+}
+@keyframes tooltipBottomBack {
+  0% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0,10px,0);
+  }
+}
+@keyframes tooltipLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-10px,0,0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+}
+@keyframes tooltipLeftBack {
+  0% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-10px,0,0);
+  }
+}
+@keyframes tooltipRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(10px,0,0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+}
+@keyframes tooltipRightBack {
+  0% {
+    opacity: 1;
+    transform: translateY(0,0,0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(10px,0,0);
+  }
+}
