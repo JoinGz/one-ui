@@ -24,6 +24,32 @@
   background: @tooltip-dark-bg-color;
   color: @white;
 }
+.@{name}-position-light {
+  background-color: @white;
+  color: @font-color;
+  box-shadow: 0 4px 22px 0 rgba(15, 35, 95, 0.12);
+  &.@{name}-position-top {
+    &::after{
+      border-top-color: @white;
+    }
+  }
+  &.@{name}-position-bottom {
+    &::after{
+      border-bottom-color: @white;
+    }
+  }
+  &.@{name}-position-left {
+    &::after{
+      border-left-color: @white;
+    }
+  }
+  &.@{name}-position-right {
+    &::after{
+      border-right-color: @white;
+    }
+  }
+  
+}
 .@{name}-trigger {
   display: inline-block;
 }

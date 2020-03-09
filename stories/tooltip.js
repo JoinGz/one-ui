@@ -22,5 +22,22 @@ storiesOf('Tooltip', module)
       <Tooltip title="789" position="right">
         <span>hover</span>
       </Tooltip>
+      <h1>Click</h1>
+      <Tooltip title="click" trigger="click">
+        <span>click</span>
+      </Tooltip>
+      <h1>主题</h1>
+      <Tooltip title="click" trigger="click" theme="light">
+        <span>click</span>
+      </Tooltip>
+      <Tooltip title="click" trigger="click" theme="light" position="bottom">
+        <span>click</span>
+      </Tooltip>
+      <Tooltip title="click" trigger="click" theme="light" position="left">
+        <span>click</span>
+      </Tooltip>
+      <Tooltip title="click" trigger="click" theme="light" position="right">
+        <span>click</span>
+      </Tooltip>
     </div>
   ));

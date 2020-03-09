@@ -22,7 +22,7 @@ export default function Tooltip(props) {
   const triggerRef = useRef();
   const postionRef = useRef();
   const hoverDomRef = useRef();
-  const timerRef = useRef({timer:null, blockTimer:null}); // 移入移出定时器
+  const timerRef = useRef({ timer: null, blockTimer: null, debounce: null, isOpend: false }); // 移入移出定时器
 
 
   const [visibility, setVisibility] = useState(false);
@@ -48,39 +48,67 @@ export default function Tooltip(props) {
   const bindTriggerEvents = disabled
     ? {}
     : isHover
-    ? {
+      ? {
         mouseenter: mouerIn,
         mouseleave: mouerOut
       }
-    : {
+      : {
         click: mouerIn
       };
 
-      function mouerIn(e) {
-        setIsRender(true);
-        setNoBlock('block');
-        console.log('进入');
-        console.log(timerRef.current);
-        if (timerRef.current) {
-          clearTimeout(timerRef.current.blockTimer);
-          clearTimeout(timerRef.current.timer);
-        }
-        setVisibility(true);
-      }
-      function mouerOut(e) {
-        console.log('出去');
-        timerRef.current.timer = setTimeout(() => {
-          setVisibility(false);
-          timerRef.current.blockTimer = setTimeout(() => {
-            setNoBlock('none');
-          }, 200);
-        }, 100)
-      }
+  function mouerIn(e) {
+    setIsRender(true);
+    setNoBlock('block');
+    console.log('进入');
+    console.log(timerRef.current);
+    clearTimeout(timerRef.current.debounce);
+    clearTimeout(timerRef.current.blockTimer);
+    clearTimeout(timerRef.current.timer);
+    setVisibility(true);
+    if (!timerRef.current.isOpend) {
+      onVisibleChange && onVisibleChange(true)
+      timerRef.current.isOpend = true
+    }
+
+  }
+  function mouerOut(e) {
+    if (timerRef.current.debounce) {
+      clearTimeout(timerRef.current.debounce)
+      timerRef.current.debounce = null
+    }
+    timerRef.current.debounce = setTimeout(() => {
+      console.log('出去');
+      // timer定时器 -- 移出后100ms隐藏
+      timerRef.current.timer = setTimeout(() => {
+        setVisibility(false);
+        onVisibleChange && onVisibleChange(false)
+        timerRef.current.isOpend = false
+        timerRef.current.blockTimer = setTimeout(() => {
+          // blockTimer定时器 -- 动画结束后设置display:none
+          setNoBlock('none');
+        }, 200);
+      }, 100)
+      // debounce定时器 -- 防抖300ms
+    }, 300)
+  }
 
   useEffect(() => {
     Object.keys(bindTriggerEvents).forEach((item, i) => {
       hoverDomRef.current.addEventListener(item, bindTriggerEvents[item], false);
     });
+    if (!isHover) {
+      document.body.addEventListener('click', (e)=>{
+        if (!hoverDomRef.current.contains(e.target) && (postionRef.current && !postionRef.current.contains(e.target))) {
+          console.log('关闭');
+          setVisibility(false);
+          onVisibleChange && onVisibleChange(false)
+          timerRef.current.isOpend = false
+          timerRef.current.blockTimer = setTimeout(() => {
+            setNoBlock('none');
+          }, 200);
+        }
+      }, false)
+    }
     return () => {
       Object.keys(bindTriggerEvents).forEach((item, i) => {
         hoverDomRef.current.removeEventListener(
@@ -138,8 +166,8 @@ export default function Tooltip(props) {
         <Position appendToBody={appendToBody} triggerRef={triggerRef}>
           <div
             ref={postionRef}
-            onMouseEnter={isHover ? mouerIn : undefined}
-            onMouseLeave={isHover ? mouerOut : undefined}
+            onMouseEnter={isHover && visibility ? mouerIn : undefined}
+            onMouseLeave={isHover && visibility ? mouerOut : undefined}
             style={{ left, top, display: noblock }}
             className={cls(
               `${prefixCls}-position-${theme}`,
@@ -162,7 +190,7 @@ Tooltip.defaultProps = {
   title: '',
   trigger: triggerTypes.hover,
   theme: themes[0],
-  onVisibleChange: () => {},
+  onVisibleChange: (e) => {console.log('bool:' + e)},
   getPopupContainer: () => document.body,
   disabled: false
 };
