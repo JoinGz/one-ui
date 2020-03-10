@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cls from 'classnames';
 import ReactDOM from 'react-dom';
@@ -18,7 +18,11 @@ const Position = props => {
     return ReactDOM.createPortal(children, triggerRef.current);
   }
 };
-export default function Tooltip (props) {
+const TooltipMemo = React.memo(Tooltip);
+export default TooltipMemo
+function Tooltip (props) {
+  console.log('重新渲染了');
+  
   const triggerRef = useRef();
   const postionRef = useRef();
   const hoverDomRef = useRef();
@@ -64,7 +68,7 @@ export default function Tooltip (props) {
     console.log(timerRef.current);
     clearTimeout(timerRef.current.debounce);
     clearTimeout(timerRef.current.blockTimer);
-    clearTimeout(timerRef.current.timer);
+    // clearTimeout(timerRef.current.timer);
     setVisibility(true);
     if (!timerRef.current.isOpend) {
       onVisibleChange && onVisibleChange(true)
@@ -249,3 +253,18 @@ Tooltip.propTypes = {
   disabled: PropTypes.bool,
   disabled: PropTypes.bool,
 };
+/**
+ * 思路
+ * hover组件children时赖渲染title属性并展示的合适的位置
+ * 主要还是在生成类名，不同的类名不同的样式和位置。
+ * 用ReactDOM.createPortal创建dom到指定位置，方便index管理
+ * 动画消失时不再具备事件
+ * 事件的防抖
+ * 遇到的问题
+ * hooks里面取值是上次的问题
+ * 解决方案：
+ * 1.设置依赖,依赖更新-->函数更新--->绑定新的函数
+ * 2.利用useRef
+ * 3.利用useReducer
+ * 用NODE.contains()判断是否在元素内
+ */
