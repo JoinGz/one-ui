@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { version, name, description } = require("../package.json");
 
 module.exports = {
-  entry: ['./components/index.js'],
+  entry: ['./react/index.js'],
   //umd 模式打包
   output: {
     library: name,

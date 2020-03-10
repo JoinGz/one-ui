@@ -5,62 +5,6 @@ import Tooltip from '../components/tooltip/index.jsx'
 import Button from '../components/button/index.jsx'
 import '../components/tooltip/style.js'
 
-class IndexPage extends React.PureComponent{
-  constructor() {
-    super();
-    this.state = {
-      isShow: false
-    };
-    console.log('constructor');
-  }
-  changeState = () => {
-    this.setState({
-      isShow: true
-    })
-  };
-  render() {
-    console.log('render');
-    return (
-      <div>
-        <button onClick={this.changeState}>点击</button>
-        <div>{this.state.isShow.toString()}</div>
-      </div>
-    );
-  }
-}
-class Ye extends React.PureComponent{
-  constructor(props){
-    super(props)
-  }
-  render () {
-
-    console.log('c Yeeee');
-    return (
-      <>
-        <p>点我</p>
-      </>
-    )
-  }
-}
-class Xe extends React.Component{
-  state = {
-    x : 0
-  }
-  render () {
-    return (
-      <>
-        {this.state.x}
-        <p onClick={()=>{this.setState({x: 1})}}>点我</p>
-        <Tooltip title="上边的朋友">
-          <Button>上</Button>
-        </Tooltip>
-        <Ye />
-        <IndexPage />
-      </>
-    )
-  }
-}
-
 storiesOf('Tooltip', module)
   .add('Tooltip2', () => (  // 这里是另一个 story
     <div style={{padding: '0 0 0 30px'}}>

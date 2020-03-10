@@ -18,8 +18,7 @@ const Position = props => {
     return ReactDOM.createPortal(children, triggerRef.current);
   }
 };
-const TooltipMemo = React.memo(Tooltip);
-export default TooltipMemo
+
 function Tooltip (props) {
   console.log('重新渲染了');
   
@@ -268,3 +267,24 @@ Tooltip.propTypes = {
  * 3.利用useReducer
  * 用NODE.contains()判断是否在元素内
  */
+
+function areEqual(prevProps, nextProps) {
+  let keys = Object.keys(prevProps)
+  let bool = true // 不重新渲染
+  for (let i = 0; i < keys.length; i++) {
+    if (prevProps[keys[i]] !== nextProps[keys[i]]){
+      bool =  false
+      console.log(prevProps);
+      console.log(nextProps);
+      console.log(keys[i]);
+      console.log(prevProps[keys[i]]);
+      console.log(nextProps[keys[i]]);
+      console.log('是否相等：' + prevProps[keys[i]] === nextProps[keys[i]]);
+      break;
+    }
+    return bool
+  }
+}
+
+const TooltipMemo = React.memo(Tooltip, areEqual);
+export default TooltipMemo
