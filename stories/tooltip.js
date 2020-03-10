@@ -39,5 +39,9 @@ storiesOf('Tooltip', module)
       <Tooltip title="click" trigger="click" theme="light" position="right">
         <span>click</span>
       </Tooltip>
+      <h1>默认显示</h1>
+      <Tooltip title="visible"  visible>
+        <span>click</span>
+      </Tooltip>
     </div>
   ));
