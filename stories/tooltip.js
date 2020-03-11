@@ -66,6 +66,5 @@ storiesOf('Tooltip', module)
         <Tooltip title="body" appendToBody trigger="click" position="right">
           <Button>click</Button>
         </Tooltip>
-        <Xe />
     </div>
   ));

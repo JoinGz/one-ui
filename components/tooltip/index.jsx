@@ -44,7 +44,8 @@ function Tooltip (props) {
     appendToBody,
     disabled,
     position,
-    visible
+    visible,
+    ...attr
   } = props;
 
   const isHover = trigger === triggerTypes['hover'] && !visible;
@@ -207,7 +208,7 @@ function Tooltip (props) {
 
   const { left, top } = styleDate;
   return (
-    <div ref={triggerRef} className={cls(`${prefixCls}`, className)}>
+    <div ref={triggerRef} className={cls(`${prefixCls}`, className)} {...attr} >
       {isRender ? (
         <Position appendToBody={appendToBody} triggerRef={triggerRef}>
           <div

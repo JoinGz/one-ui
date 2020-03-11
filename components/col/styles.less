@@ -1,0 +1,17 @@
+@import '../styles/vars.less';
+@import '../styles/mixins.less';
+@name: one-col;
+@offsetCls : offset;
+
+.@{name} {
+  .loop(@n) when (@n > 0) {
+    &-@{n} {
+      width: @n / @max-col-length * @max-row-width;
+    }
+    &-@{offsetCls}-@{n} {
+      margin-left: @n / @max-col-length * @max-row-width;
+    }
+    .loop(@n - 1);
+  }
+  .loop(@max-col-length);
+}
