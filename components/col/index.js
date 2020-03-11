@@ -19,8 +19,7 @@ function Col(props) {
         paddingRight: gutter / 2
       }
     : {};
-    console.log(prefixCls, span);
-    
+
   return (
     <div
       className={cls(
@@ -28,7 +27,7 @@ function Col(props) {
         className,
         {
           [`${prefixCls}-${span}`]: span,
-          [`${prefixCls}-${offset}`]: offset
+          [`${prefixCls}-offset-${offset}`]: offset
         },
       )}
       style={{ ...style, ...colStyle }}
