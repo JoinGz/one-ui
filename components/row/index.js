@@ -49,7 +49,7 @@ Row.defaultProps = {
 };
 Row.propTypes = {
   justify: PropTypes.oneOf(['start','end','center','space-around','space-between']),
-  align: PropTypes.oneOfType(['top','middle','bottom']),
+  align: PropTypes.oneOf(Object.keys(flexAlign)),
   gutter: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   prefixCls: PropTypes.string.isRequired,
 };
