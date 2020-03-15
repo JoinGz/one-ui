@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import cls from "classnames";
-
+import UploadedList from './uploadedList.js'
 function getError(action, xhr) {
   let msg;
   if (xhr.response) {
@@ -137,7 +137,7 @@ function Upload(props) {
   } = props
   const inputFileRef = useRef()
   const FileListRef = useRef([])
-
+  const [refalsh, setRefalsh] = useState(0)
 
   function openFileChoose () {
     inputFileRef.current.click()
@@ -153,12 +153,13 @@ function Upload(props) {
       // 增加了文件
       const packFile = changed(item)
       changeList([...FileListRef.current, packFile])
-      uploadFile(item)
+      uploadFile(packFile)
     }
   }
 
   function changeList (arr) {
     FileListRef.current = arr
+    setRefalsh(refalsh=>refalsh+1)
     if(onChange) {
       console.log('onChange');
       onChange(FileListRef.current)
@@ -217,6 +218,13 @@ function Upload(props) {
     }
     customRequest(options)
   }
+  function onRemoveHander (item, i) {
+    if (i!= null) {
+      FileListRef.current.splice(i,1)
+      changeList(FileListRef.current)
+    }
+    onRemove && onRemove(item, FileListRef.current)
+  }
   return (
     <div className={cls(prefixCls,classname)}  {...attr}>
       <input
@@ -230,6 +238,9 @@ function Upload(props) {
       <div className={cls(`${prefixCls}-tigger`,)} onClick={openFileChoose}>
         {children}
       </div>
+      {showFileList && 
+        <UploadedList prefixCls={prefixCls} onRemove={onRemoveHander} list={FileListRef.current} />
+      }
     </div>
   )
 }
@@ -264,9 +275,21 @@ Upload.defaultProps = {
   name: 'file',
   multiple: false,
   customRequest: Ajax,
-  onError: function () {},
-  onSuccess: function () {},
-  onProgress: function () {},
-  onChange: function (e) {console.log([...e])},
+  onError: function (e,options) {
+    console.log('翻车原因：');
+    console.log(e);
+    console.log(options.file.fileName+'翻车');
+  },
+  onSuccess: function (e,options) {
+    console.log(options.file.fileName+'成功');
+  },
+  onProgress: function (e,options) {
+    console.log(options.file.fileName+'进度'+options.file.progress);
+  },
+  onChange: function (e) {
+    console.log('当前文件:');
+    console.log(e);
+    
+  },
 }
 export default React.memo(Upload)

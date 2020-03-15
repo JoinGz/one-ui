@@ -17,7 +17,7 @@ import {
   FiEye,
   FiEyeOff
 } from "react-icons/fi";
-
+import { AiOutlineCheckCircle,AiOutlineCloseCircle,AiOutlineClockCircle } from "react-icons/ai";
 import { IoMdCloseCircle } from "react-icons/io";
 
 export const InfoIcon = props => <FiVolume2 {...props} />;
@@ -37,3 +37,4 @@ export const EmptyIcon = props => <FiHardDrive {...props} />;
 export const UserIcon = props => <FiUser {...props} />;
 export const PasswordShowIcon = props => <FiEye {...props} />;
 export const PasswordHideIcon = props => <FiEyeOff {...props} />;
+export {AiOutlineCheckCircle, AiOutlineCloseCircle,AiOutlineClockCircle}

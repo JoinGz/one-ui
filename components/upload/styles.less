@@ -1,0 +1,47 @@
+@import '../styles/vars.less';
+@name: one-upload;
+.@{name}-li {
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    margin-top: 5px;
+    align-items: center;
+    color: @font-color;
+    &:hover {
+        background-color: #f5f7fa;
+        .@{name}-li-name {
+            color: @primary-color;
+        }
+    }
+}
+.@{name}-li-name{
+    padding-left: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.@{name}-li-icon {
+    font-size: 0;
+}
+.font16 {
+    font-size: 16px;
+}
+.uploadSuccess {
+    .font16;
+    color: @primary-color;
+}
+.uploadind{
+    .font16;
+    color: @info-color;
+}
+.uploadFail {
+    .font16;
+    color: @error-color;
+}
+.deletedIcon {
+    .font16;
+    cursor: pointer;
+    &:hover {
+        color: @primary-color;
+    }
+}
