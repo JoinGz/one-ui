@@ -79,7 +79,6 @@ function getFile (arr, item, uid) {
     const element = arr[i];
     if (element[uid] === item[uid]) {
       return i
-      break;
     }
   }
 }
