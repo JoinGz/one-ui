@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "noImplicitAny": true, // 在表达式和声明上有隐含的 any类型时报错。
+    "removeComments": false, // 删除所有注释，除了以 /!*开头的版权信息。
+    "preserveConstEnums": true, // 保留 const和 enum声明。
+    // "outFile": "../../built/local/tsc.js", // 将输出文件合并为一个文件。
+    "sourceMap": true,
+    "declaration": true, // 生成相应的 .d.ts文件。
+    "skipLibCheck": true, // 忽略所有的声明文件（ *.d.ts）的类型检查。
+    "jsx": "react", // 在 .tsx文件里支持JSX
+    "lib": [
+      "dom",
+      "esnext"
+    ], // 编译过程中需要引入的库文件的列表。 
+    "moduleResolution": "node", // 决定如何处理模块(采用nodejs方式)
+    "esModuleInterop": true,
+    "experimentalDecorators": true, // 启用实验性的ES装饰器
+    "noUnusedLocals": true, // 若有未使用的局部变量则抛错。
+    "noUnusedParameters": true, // 若有未使用的参数则抛错。
+    "noFallthroughCasesInSwitch": true // 报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）
+  },
+  "include": [],
+  "exclude": [
+    "node_modules",
+    "components/**/"
+  ]
+}
