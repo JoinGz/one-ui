@@ -18,11 +18,12 @@
     "experimentalDecorators": true, // 启用实验性的ES装饰器
     "noUnusedLocals": true, // 若有未使用的局部变量则抛错。
     "noUnusedParameters": true, // 若有未使用的参数则抛错。
-    "noFallthroughCasesInSwitch": true // 报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）
+    "noFallthroughCasesInSwitch": true, // 报告switch语句的fallthrough错误。（即，不允许switch的case语句贯穿）
   },
-  "include": [],
+  "include": [
+    "./components/**/*"
+  ],
   "exclude": [
     "node_modules",
-    "components/**/"
   ]
 }

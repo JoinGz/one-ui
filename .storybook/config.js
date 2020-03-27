@@ -6,6 +6,7 @@ function loadStories() {
   require('../stories/tooltip.js'); // 指定 story 的位置
   require('../stories/col.js'); // 指定 story 的位置
   require('../stories/upload.js'); // 指定 story 的位置
+  require('../stories/test.js'); // 指定 story 的位置
 }
 
 configure(loadStories, module);
