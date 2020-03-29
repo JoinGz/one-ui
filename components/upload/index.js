@@ -172,7 +172,32 @@ function Upload(props) {
     }
     const before = beforeUpload()
     if (before && before.then) {
-      before.then()
+      before.then(file=>{
+        const fileType = Object.prototype.toString.call(file)
+        if (['object File', 'object Blob'].includes(fileType)) {
+          if (['object Blob'].includes(fileType)) {
+            file = new File([file], packFile.rawFile.name, {
+              type: packFile.rawFile.type
+            })
+          }
+          for(const key in packFile) {
+            if (packFile.hasOwnProperty(key)) {
+              file[key] = packFile[key]
+            }
+          }
+          post(file)
+        } else {
+          post(packFile)
+        }
+      }, (err)=>{
+        let currentFileList = FileListRef.current
+        let fileIndex = getFile(FileListRef.current, packFile, 'uid')
+        packFile.progress = 100
+        packFile.status = 'fail'
+        currentFileList.splice(fileIndex, 1, packFile)
+        changeList(currentFileList)
+        onError(err, packFile);
+      })
     } else if (before !== false) {
       return post(packFile)
     } else {
@@ -218,7 +243,7 @@ function Upload(props) {
     customRequest(options)
   }
   function onRemoveHander (item, i) {
-    if (i!= null) {
+    if (i != null) {
       FileListRef.current.splice(i,1)
       changeList(FileListRef.current)
     }
