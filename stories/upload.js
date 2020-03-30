@@ -9,7 +9,7 @@ import "../components/upload/style.js";
 import "../components/button/style.js";
 
 
-storiesOf("Col", module).add("Col2", () => (
+storiesOf("Upload", module).add("upload", () => (
   // 这里是另一个 story
   <div style={{ padding: "0 30px 0 30px" }}>
     <h1>基础布局</h1>

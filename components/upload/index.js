@@ -4,6 +4,14 @@ import cls from "classnames";
 import UploadedList from './uploadedList.js'
 import Upload from './upload.js'
 
+function getFile (arr, item) {
+  for (let i = 0; i < arr.length; i++) {
+    const element = arr[i];
+    if (element.rawFile === item) {
+      return{ currentFile: element , currenIndex: i}
+    }
+  }
+}
 
 function changed (rawFile) {
   return {
@@ -19,17 +27,8 @@ function changed (rawFile) {
 function Index(props) {
   const {
     prefixCls,
-    action,
-    headers,
-    accept,
     drag,
     showFileList,
-    withCredentials,
-    name,
-    data,
-    multiple,
-    beforeUpload,
-    customRequest,
     disabled,
     listType,
     previewFile,
@@ -46,12 +45,12 @@ function Index(props) {
   const FileListRef = useRef([])
   const [refalsh, setRefalsh] = useState(0)
 
-  function fileChange (files) {
+  function fileAdd (files) {
     if (!files) return;
     console.log(files);
-      // 增加了文件
-      const packFile = changed(files)
-      changeList([...FileListRef.current, packFile])
+    // 增加了文件
+    const packFile = changed(files)
+    changeList([...FileListRef.current, packFile])
   }
 
   function changeList (arr) {
@@ -63,7 +62,33 @@ function Index(props) {
     }
   }
 
-
+  function handleSuccess(e, rawFile) {
+    let currentFileList = FileListRef.current
+    let fileIndex = getFile(FileListRef.current, rawFile)
+    options.file.progress = 100
+    options.file.status = 'success'
+    currentFileList.splice(fileIndex, 1, options.file)
+    changeList(currentFileList)
+    onSuccess && onSuccess(e, options)
+  }
+  function handleProgress(e, rawFile) {
+    let currentFileList = FileListRef.current
+    let {currentFile, currenIndex} = getFile(FileListRef.current, rawFile)
+    currentFile.progress = e.percent
+    currentFile.status = 'uploading'
+    currentFileList.splice(currenIndex, 1, currentFile)
+    changeList(currentFileList)
+    onProgress && onProgress(e, currentFile);
+  }
+  function handleError(e, rawFile) {
+    let currentFileList = FileListRef.current
+    let {currentFile, currenIndex} = getFile(FileListRef.current, rawFile)
+    currentFile.progress = 100
+    currentFile.status = 'fail'
+    currentFileList.splice(currenIndex, 1, currentFile)
+    changeList(currentFileList)
+    onError && onError(e, currentFile);
+  }
 
   function onRemoveHander (item, i) {
     if (i != null) {
@@ -73,8 +98,10 @@ function Index(props) {
     onRemove && onRemove(item, FileListRef.current)
   }
   return (
-    <div className={cls(prefixCls,classname)}  {...attr}>
-      <Upload onStart={fileChange} onChange={fileChange} onRemove={onRemoveHander} onSuccess={} onProgress={} onError={}></Upload>
+    <div className={cls(prefixCls,classname)}>
+      <Upload {...attr}  onStart={fileAdd} onRemove={onRemoveHander} onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError}>
+        {children}
+      </Upload>
       {showFileList && 
         <UploadedList prefixCls={prefixCls} onRemove={onRemoveHander} list={FileListRef.current} />
       }
@@ -111,22 +138,31 @@ Index.defaultProps = {
   withCredentials: true,
   name: 'file',
   multiple: false,
-  customRequest: Ajax,
   onError: function (e,options) {
     console.log('翻车原因：');
     console.log(e);
-    console.log(options.file.fileName+'翻车');
+    console.log(options.fileName+'翻车');
   },
   onSuccess: function (e,options) {
-    console.log(options.file.fileName+'成功');
+    console.log(options.fileName+'成功');
   },
   onProgress: function (e,options) {
-    console.log(options.file.fileName+'进度'+options.file.progress);
+    console.log(options.fileName+'进度'+options.progress);
   },
   onChange: function (e) {
     console.log('当前文件:');
     console.log(e);
-    
   },
 }
 export default React.memo(Index)
+
+/**
+ * 思路
+ * upload 单纯的上传组件
+ * index 封装后的组件
+ * blob 转换为file对象
+ * new File([Blob], File.name, {
+      type: File.type
+  })
+ * callback 对依赖函数的包装
+ */
