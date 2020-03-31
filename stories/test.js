@@ -1,12 +1,17 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
+import '../components/message/style.js'
 
-import App from "../components/test/index.tsx";
 
-storiesOf("Test", module).add("Col2", () => (
+import App from "../components/message/index.tsx";
+console.dir(App)
+storiesOf("Message", module).add("message", () => (
   // 这里是另一个 story
   <div style={{ padding: "0 30px 0 30px" }}>
-    <h1>基础布局</h1>
-    <App />
+    <h1 onClick={function () {
+      console.log('45646');
+      App.openMsg({message: '123'})
+    }}>基础布局</h1>
+    <App message={'已领取'} cla = {1} className="kk" duration={'123'} />
   </div>
 ));
