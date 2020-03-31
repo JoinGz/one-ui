@@ -12,6 +12,10 @@
   font-size: 14px;
   animation: animationb2t 0.2s ;
   animation-fill-mode: forwards;
+  background: #fff;
+  box-shadow: 0 3px 6px -4px rgba(0,0,0,0.12), 0 6px 16px 0 rgba(0,0,0,0.08), 0 9px 28px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  width: 100px;
 }
 .@{name}-visiblity {
   animation: animationT2b 0.2s ;
@@ -28,8 +32,10 @@
 @keyframes animationb2t {
   0% {
     transform: translateY(0);
+    opacity: 1;
   }
   100% {
-    transform: translateY(-30%);
+    transform: translateY(-50%);
+    opacity: 0;
   }
 }

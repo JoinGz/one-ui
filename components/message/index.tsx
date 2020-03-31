@@ -19,6 +19,7 @@ function Message (props: messageProps) {
     setVisiblity(false)
     setTimeout(() => {
       ReactDOM.unmountComponentAtNode(dom)
+      dom.parentElement.removeChild(dom)
     }, 200);
   }, duration);
   return (
@@ -59,8 +60,9 @@ Message.openMsg = function (data: messageProps) {
   //     ReactDOM.unmountComponentAtNode(newDiv)
   //   }, 2000);
   // }
-  ReactDOM.render(
-      React.createElement(Message, Object.assign(data, {dom: newDiv})), newDiv||dom
+   ReactDOM.render(
+      // React.createElement(Message, Object.assign(data, {dom: newDiv})), newDiv
+      <Message {...data} dom={newDiv} />, newDiv
   );
 }
 export default Message

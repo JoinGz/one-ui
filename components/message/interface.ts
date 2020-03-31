@@ -9,6 +9,7 @@ export interface messageProps {
   offset?: number,
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  // dom?: HTMLDivElement,
+  dom?: HTMLDivElement,
+  ref?: any,
   ['className']?: any,
 }
