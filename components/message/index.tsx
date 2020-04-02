@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import cls from 'classnames';
 import {messageProps} from './interface'
 import ReactDOM from 'react-dom';
@@ -15,16 +15,22 @@ function Message (props: messageProps) {
     ...attr
   } = props
   let [visiblity, setVisiblity] = useState(true)
-  setTimeout(() => {
-    setVisiblity(false)
-    setTimeout(() => {
-      ReactDOM.unmountComponentAtNode(dom)
-      dom.parentElement.removeChild(dom)
-    }, 200);
-  }, duration);
+  
+  useEffect(()=>{
+    if (dom) {
+      setTimeout(() => {
+        setVisiblity(false)
+        setTimeout(() => {
+          ReactDOM.unmountComponentAtNode(dom)
+          dom.parentElement.removeChild(dom)
+        }, 200);
+      }, duration);
+    }
+  }, [])
   return (
     <div className={cls(prefixCls, className, {
-      [`${prefixCls}-visiblity`]: visiblity
+      [`${prefixCls}-visiblity`]: dom && visiblity,
+      [`${prefixCls}-hide`]: dom && !visiblity,
     })} {...attr}>
       <div>
         <i className={cls(`${prefixCls}-icon`, iconClass)}></i>
