@@ -1,7 +1,7 @@
 export interface messageProps {
   prefixCls?: string,
   message: string,
-  type?: 'success' | 'warning' | 'info' | 'error',
+  type?: string,
   iconClass?: string,
   duration?: number,
   showClose?: boolean,
@@ -11,5 +11,5 @@ export interface messageProps {
   children?: React.ReactNode;
   dom?: HTMLDivElement,
   ref?: any,
-  ['className']?: any,
+  [propName:string]:any
 }

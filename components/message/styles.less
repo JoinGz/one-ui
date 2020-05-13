@@ -6,6 +6,16 @@
   left: 50%;
   transform: translateX(-50%);
 }
+.@{name}-text {
+  display: flex;
+  align-items: center;
+}
+.@{name}-icon {
+  margin-right: 5px;
+}
+.@{name}-icon-success {
+  color: @primary-color;
+}
 .@{name} {
   padding: 10px 16px;
   color: @font-color;
@@ -13,7 +23,7 @@
   background: #fff;
   box-shadow: 0 3px 6px -4px rgba(0,0,0,0.12), 0 6px 16px 0 rgba(0,0,0,0.08), 0 9px 28px 8px rgba(0,0,0,0.05);
   margin-bottom: 20px;
-  width: 100px;
+  display: inline-block;
 }
 .@{name}-visiblity {
   animation: animationT2b 0.2s ;
