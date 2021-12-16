@@ -1,6 +1,8 @@
+import {ReactElement} from 'react'
+
 export interface messageProps {
   prefixCls?: string,
-  message: string,
+  message?: string,
   type?: string,
   iconClass?: string,
   duration?: number,
@@ -11,5 +13,24 @@ export interface messageProps {
   children?: React.ReactNode;
   dom?: HTMLDivElement,
   ref?: any,
-  [propName:string]:any
+  className?: string,
+  mkey: number
+}
+
+interface defaultProps {
+  prefixCls: string,
+  duration: number,
+  key?: number,
+}
+
+export interface msgFn {
+  (props: messageProps, context?: any): ReactElement | null;
+  isRender: boolean,
+  defaultProps: defaultProps
+  instance: {
+    [key: string]: HTMLDivElement
+  },
+  key:number,
+  openMsg(defaultProps: defaultProps): void,
+  
 }

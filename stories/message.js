@@ -4,7 +4,9 @@ import '../components/message/style.js'
 
 
 let a= 0;
-import App from "../components/message/index.js";
+import App from "../components/message/index.tsx";
+import AppJs from "../components/message/index.js";
+
 console.dir(App)
 storiesOf("Message", module).add("message", () => (
   // 这里是另一个 story
@@ -18,5 +20,10 @@ storiesOf("Message", module).add("message", () => (
       App.openMsg({message: `已领取~`,})
     }}>点击领取疾风剑豪</div>
     <App message={'已领取'} className="kk" duration={'123'} />
+
+    <div style={{display:"line-block",margin: "10px 0"}} onClick={function () {
+      AppJs.openMsg({message: `已领取~`,})
+    }}>点击领取疾风剑豪JS</div>
+
   </div>
 ));
